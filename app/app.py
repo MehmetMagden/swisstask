@@ -1,16 +1,16 @@
+import os
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 app = Flask(__name__)
 
-#Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] =(
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL',
     f"postgresql://"
     f"{os.environ.get('DB_USER', 'taskuser')}:"
     f"{os.environ.get('DB_PASSWORD', 'taskpass')}@"
     f"{os.environ.get('DB_HOST', 'db')}/"
-    f"{os.environ.get('DB_NAME', 'taskdb')}" 
+    f"{os.environ.get('DB_NAME', 'taskdb')}"
 )
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

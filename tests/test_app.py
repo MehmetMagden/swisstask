@@ -1,6 +1,14 @@
+import os
+os.environ['DATABASE_URL'] = 'sqlite:///:memory:'
+
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'app'))
+
+from app import app, db
+
+
 import pytest
 import sys
-import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'app'))
 
 from app import app, db
@@ -8,8 +16,6 @@ from app import app, db
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
-    app.config['PROPAGATE_EXCEPTIONS'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
     with app.app_context():
         db.create_all()
         yield app.test_client()
